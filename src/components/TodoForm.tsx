@@ -1,12 +1,13 @@
 import * as React from 'react';
+import { UpdateCurrentAction } from '../store/Todo/types';
 
 // tslint:disable-next-line:interface-name
 interface TodoFormProps {
   currentTodo: string;
-  updateCurrent: (val: string) => void;
+  updateCurrent: (val: string) => UpdateCurrentAction;
 }
 
-class TodoForm extends React.Component<TodoFormProps> {
+class TodoForm extends React.Component<TodoFormProps, {}> {
     constructor(props: TodoFormProps) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
