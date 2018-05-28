@@ -6,7 +6,7 @@ export const initialState: TodoState = {
   todos: [],
 };
 
-const reducer: Reducer<TodoState, TodoAction> = (state: TodoState = initialState, action: TodoAction) => {
+const reducer: Reducer<TodoState> = (state: TodoState = initialState, action: TodoAction) => {
   switch(action.type) {
     case TodoConsts.TODOS_LOAD:
       return {...state, todos: action.payload};
