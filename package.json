@@ -4,6 +4,7 @@
   "license": "",
   "private": true,
   "dependencies": {
+    "json-server": "^0.12.2",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-redux": "^5.0.7",
@@ -15,7 +16,8 @@
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "dev-server": "json-server -p 8080 ./db.json"
   },
   "devDependencies": {
     "@types/jest": "^22.2.3",

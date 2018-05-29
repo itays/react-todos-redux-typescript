@@ -1,4 +1,6 @@
+import { Dispatch } from 'react-redux';
 import { ActionCreator } from 'redux';
+import { getTodos } from '../../services/todoService';
 import { ReplaceTodoAction, TodoAddedAction, TodoConsts, TodoItem, TodoRemovedAction, TodosLoadAction, UpdateCurrentAction } from './types';
 
 export const loadTodos: ActionCreator<TodosLoadAction> = (todos: TodoItem[]) => ({
@@ -25,3 +27,20 @@ export const removeTodo: ActionCreator<TodoRemovedAction> = (id: string | number
   payload: id,
   type: TodoConsts.TODO_REMOVED,
 });
+
+// export function fetchTodos(): (dispatch: Dispatch<TodosLoadAction>) => Promise<void> {
+//   return async (dispatch) => {
+//     try {
+//       const todos = await getTodos();
+//       dispatch(loadTodos(todos));
+//     } catch(e) {
+//       // tslint:disable-next-line:no-console
+//       console.log(e);
+//     }
+//   }
+// }
+
+export const fetchTodos = () => (dispatch: Dispatch<TodosLoadAction>) => {
+  // dispatch(showMessage('Loading todos'));
+  getTodos().then(todos => dispatch(loadTodos(todos)));
+}

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import './App.css';
 import TodoForm from './containers/TodoForm.container';
+import TodoList from './containers/TodoList.container';
 
 class App extends React.Component {
   public render() {
@@ -11,6 +12,7 @@ class App extends React.Component {
         </header>
         <div className="todo-app">
           <TodoForm />
+          <TodoList />
         </div>
       </div>
     );
