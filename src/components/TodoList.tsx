@@ -4,7 +4,7 @@ import { TodoItem } from '../store/Todo/types';
 // tslint:disable-next-line:interface-name
 interface TodoListProps {
   todos: TodoItem[];
-  fetchTodos: () => () => void;
+  fetchTodos: () => () => Promise<void>;
 }
 
 const TodoItem = ({name}: TodoItem) => (

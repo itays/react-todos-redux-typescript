@@ -1,6 +1,6 @@
 import { Dispatch } from 'react-redux';
 import { ActionCreator } from 'redux';
-import { getTodos } from '../../services/todoService';
+import { createTodo, getTodos } from '../../services/todoService';
 import { ReplaceTodoAction, TodoAddedAction, TodoConsts, TodoItem, TodoRemovedAction, TodosLoadAction, UpdateCurrentAction } from './types';
 
 export const loadTodos: ActionCreator<TodosLoadAction> = (todos: TodoItem[]) => ({
@@ -28,19 +28,24 @@ export const removeTodo: ActionCreator<TodoRemovedAction> = (id: string | number
   type: TodoConsts.TODO_REMOVED,
 });
 
-// export function fetchTodos(): (dispatch: Dispatch<TodosLoadAction>) => Promise<void> {
-//   return async (dispatch) => {
-//     try {
-//       const todos = await getTodos();
-//       dispatch(loadTodos(todos));
-//     } catch(e) {
-//       // tslint:disable-next-line:no-console
-//       console.log(e);
-//     }
-//   }
-// }
+export const fetchTodos = () => async (dispatch: Dispatch<TodosLoadAction>) => {
+  try {
+    // dispatch(showMessage('Loading todos'));
+    const todos = await getTodos();
+    dispatch(loadTodos(todos));
+  } catch (error) {
+    // tslint:disable-next-line:no-console
+    console.log(error);
+  }
+}
 
-export const fetchTodos = () => (dispatch: Dispatch<TodosLoadAction>) => {
-  // dispatch(showMessage('Loading todos'));
-  getTodos().then(todos => dispatch(loadTodos(todos)));
+export const saveTodo = (name: string) => async (dispatch: Dispatch<TodoAddedAction>) => {
+  try {
+    // dispatch(showMessage('saving todo'));
+    const todo: TodoItem = await createTodo(name);
+    dispatch(addTodo(todo));
+  } catch (error) {
+    // tslint:disable-next-line:no-console
+    console.log(error);
+  }
 }
