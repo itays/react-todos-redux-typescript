@@ -6,16 +6,18 @@ interface TodoItemProps {
   name: string;
   isComplete: boolean;
   toggleTodo: (id: string | number) => () => Promise<void>;
+  deleteTodo: (id: string | number) => () => Promise<void>;
 }
 
 class TodoItem extends React.Component<TodoItemProps> {
   public render() {
-    const {isComplete, name, id, toggleTodo } = this.props;
-    // const doDelete = deleteTodo.bind(id);
+    const {isComplete, name, id, toggleTodo, deleteTodo } = this.props;
+    const doDelete = deleteTodo.bind(this, id);
     return (
     <li data-id={id}>
     <span className="delete-item">
-      {/* <button onClick={doDelete}>X</button> */}
+      
+      <button onClick={doDelete}>X</button>
     </span>
     <label>
       <input

@@ -1,7 +1,7 @@
 import { Dispatch } from 'react-redux';
 import { ActionCreator } from 'redux';
 import { AppState } from '..';
-import { createTodo, getTodos, updateTodo } from '../../services/todoService';
+import { createTodo, destroyTodo, getTodos, updateTodo } from '../../services/todoService';
 import {
   ITodoItem,
   ReplaceTodoAction,
@@ -88,3 +88,15 @@ export const toggleTodo = (id: number | string) => async (
     console.log(error);
   }
 };
+
+export const deleteTodo = (id: number | string) => async (dispatch: Dispatch<TodoRemovedAction>) => {
+  // dispatch(showMessage('Removing todo'));
+  try {
+    await destroyTodo(id);
+    dispatch(removeTodo(id))
+  } catch (error) {
+    // tslint:disable-next-line:no-console
+    console.log(error);
+  }
+  
+}

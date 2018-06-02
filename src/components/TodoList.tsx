@@ -6,6 +6,7 @@ interface ITodoListProps {
   todos: ITodoItem[];
   fetchTodos: () => () => Promise<void>;
   toggleTodo: (id: number | string) => () => Promise<void>;
+  deleteTodo: (id: number | string) => () => Promise<void>;
 }
 
 class TodoList extends React.Component<ITodoListProps, {}> {
@@ -22,8 +23,9 @@ class TodoList extends React.Component<ITodoListProps, {}> {
           {this.props.todos.map(todo => (
             <TodoItem
               key={todo.id}
-              toggleTodo={this.props.toggleTodo}
               {...todo}
+              toggleTodo={this.props.toggleTodo}
+              deleteTodo={this.props.deleteTodo}
             />
           ))}
         </ul>
