@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import TodoList from '../components/TodoList';
 import { AppState } from '../store';
-import { fetchTodos } from '../store/Todo/actions';
+import { fetchTodos, toggleTodo } from '../store/Todo/actions';
 // import { TodosLoadAction } from '../store/Todo/types';
 
 const mapStateToProps = (state: AppState) => ({
@@ -10,4 +10,4 @@ const mapStateToProps = (state: AppState) => ({
 
 
 
-export default connect(mapStateToProps, { fetchTodos })(TodoList);
+export default connect(mapStateToProps, { fetchTodos, toggleTodo })(TodoList);

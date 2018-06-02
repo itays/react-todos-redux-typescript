@@ -1,31 +1,48 @@
 import { Dispatch } from 'react-redux';
 import { ActionCreator } from 'redux';
-import { createTodo, getTodos } from '../../services/todoService';
-import { ReplaceTodoAction, TodoAddedAction, TodoConsts, TodoItem, TodoRemovedAction, TodosLoadAction, UpdateCurrentAction } from './types';
+import { AppState } from '..';
+import { createTodo, getTodos, updateTodo } from '../../services/todoService';
+import {
+  ITodoItem,
+  ReplaceTodoAction,
+  TodoAddedAction,
+  TodoConsts,
+  TodoRemovedAction,
+  TodosLoadAction,
+  UpdateCurrentAction
+} from './types';
 
-export const loadTodos: ActionCreator<TodosLoadAction> = (todos: TodoItem[]) => ({
+export const loadTodos: ActionCreator<TodosLoadAction> = (
+  todos: ITodoItem[]
+) => ({
   payload: todos,
-  type: TodoConsts.TODOS_LOAD,
+  type: TodoConsts.TODOS_LOAD
 });
 
-export const addTodo: ActionCreator<TodoAddedAction> = (todo: TodoItem) => ({
+export const addTodo: ActionCreator<TodoAddedAction> = (todo: ITodoItem) => ({
   payload: todo,
-  type: TodoConsts.TODO_ADD,
+  type: TodoConsts.TODO_ADD
 });
 
-export const updateCurrent: ActionCreator<UpdateCurrentAction> = (val: string) => ({
+export const updateCurrent: ActionCreator<UpdateCurrentAction> = (
+  val: string
+) => ({
   payload: val,
-  type: TodoConsts.CURRENT_UPDATE,
+  type: TodoConsts.CURRENT_UPDATE
 });
 
-export const replaceTodo: ActionCreator<ReplaceTodoAction> = (todo: TodoItem) => ({
+export const replaceTodo: ActionCreator<ReplaceTodoAction> = (
+  todo: ITodoItem
+) => ({
   payload: todo,
-  type: TodoConsts.TODO_REPLACE,
+  type: TodoConsts.TODO_REPLACE
 });
 
-export const removeTodo: ActionCreator<TodoRemovedAction> = (id: string | number) => ({
+export const removeTodo: ActionCreator<TodoRemovedAction> = (
+  id: string | number
+) => ({
   payload: id,
-  type: TodoConsts.TODO_REMOVED,
+  type: TodoConsts.TODO_REMOVED
 });
 
 export const fetchTodos = () => async (dispatch: Dispatch<TodosLoadAction>) => {
@@ -37,15 +54,37 @@ export const fetchTodos = () => async (dispatch: Dispatch<TodosLoadAction>) => {
     // tslint:disable-next-line:no-console
     console.log(error);
   }
-}
+};
 
-export const saveTodo = (name: string) => async (dispatch: Dispatch<TodoAddedAction>) => {
+export const saveTodo = (name: string) => async (
+  dispatch: Dispatch<TodoAddedAction>
+) => {
   try {
     // dispatch(showMessage('saving todo'));
-    const todo: TodoItem = await createTodo(name);
+    const todo: ITodoItem = await createTodo(name);
     dispatch(addTodo(todo));
   } catch (error) {
     // tslint:disable-next-line:no-console
     console.log(error);
   }
-}
+};
+
+export const toggleTodo = (id: number | string) => async (
+  dispatch: Dispatch<ReplaceTodoAction>,
+  getState: () => AppState
+) => {
+  try {
+    // dispatch(showMessage('Saving a todo'));
+    const { todos } = getState().todo;
+    const todo = todos.find(t => t.id === id);
+    if (!todo) {
+      return;
+    }
+    const toggled = { ...todo, isComplete: !todo.isComplete };
+    const toggledTodo: ITodoItem = await updateTodo(toggled);
+    dispatch(replaceTodo(toggledTodo));
+  } catch (error) {
+    // tslint:disable-next-line:no-console
+    console.log(error);
+  }
+};

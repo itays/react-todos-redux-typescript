@@ -9,12 +9,12 @@ export enum TodoConsts {
 }
 // tslint:disable-next-line:interface-name
 export interface TodoState {
-  todos: TodoItem[];
-  currentTodo: string | TodoItem;
+  todos: ITodoItem[];
+  currentTodo: string | ITodoItem;
 }
 
 // tslint:disable-next-line:interface-name
-export interface TodoItem {
+export interface ITodoItem {
   id: number | string;
   name: string;
   isComplete: boolean;
@@ -23,13 +23,13 @@ export interface TodoItem {
 // tslint:disable-next-line:interface-name
 export interface TodoAddedAction extends Action {
   type: TodoConsts.TODO_ADD;
-  payload: TodoItem;
+  payload: ITodoItem;
 }
 
 // tslint:disable-next-line:interface-name
 export interface TodosLoadAction extends Action {
   type: TodoConsts.TODOS_LOAD;
-  payload: TodoItem[];
+  payload: ITodoItem[];
 }
 
 // tslint:disable-next-line:interface-name
@@ -41,7 +41,7 @@ export interface UpdateCurrentAction extends Action {
 // tslint:disable-next-line:interface-name
 export interface ReplaceTodoAction extends Action {
   type: TodoConsts.TODO_REPLACE;
-  payload: TodoItem;
+  payload: ITodoItem;
 }
 
 // tslint:disable-next-line:interface-name

@@ -1,30 +1,15 @@
 import * as React from 'react';
-import { TodoItem } from '../store/Todo/types';
+import { ITodoItem } from '../store/Todo/types';
+import TodoItem from './TodoItem';
 
-// tslint:disable-next-line:interface-name
-interface TodoListProps {
-  todos: TodoItem[];
+interface ITodoListProps {
+  todos: ITodoItem[];
   fetchTodos: () => () => Promise<void>;
+  toggleTodo: (id: number | string) => () => Promise<void>;
 }
 
-const TodoItem = ({name}: TodoItem) => (
-  <li>
-    <span className="delete-item">
-      {/* <button onClick={() => deleteTodo(id)}>X</button> */}
-    </span>
-    <label>
-      <input
-        type="checkbox"
-        // checked={isComplete}
-        // onChange={() => toggleTodo(id)}
-      />{' '}
-      {name}
-    </label>
-  </li>
-);
-
-class TodoList extends React.Component<TodoListProps, {}> {
-  constructor(props: TodoListProps) {
+class TodoList extends React.Component<ITodoListProps, {}> {
+  constructor(props: ITodoListProps) {
     super(props);
   }
   public componentDidMount() {
@@ -37,7 +22,7 @@ class TodoList extends React.Component<TodoListProps, {}> {
           {this.props.todos.map(todo => (
             <TodoItem
               key={todo.id}
-            //   toggleTodo={this.props.toggleTodo}
+              toggleTodo={this.props.toggleTodo}
               {...todo}
             />
           ))}
