@@ -11,8 +11,6 @@ import { AppState, reducer } from './store';
 
 const store: Store<AppState> = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 
-
-
 ReactDOM.render(
   <Provider store={store}>
     <App />

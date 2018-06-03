@@ -2,9 +2,12 @@ import { Dispatch } from 'react-redux';
 import { ActionCreator } from 'redux';
 import { AppState } from '..';
 import { createTodo, destroyTodo, getTodos, updateTodo } from '../../services/todoService';
+import { showMessage } from '../Message/actions';
+import { MessageAction } from '../Message/types';
 import {
   ITodoItem,
   ReplaceTodoAction,
+  TodoAction,
   TodoAddedAction,
   TodoConsts,
   TodoRemovedAction,
@@ -45,9 +48,9 @@ export const removeTodo: ActionCreator<TodoRemovedAction> = (
   type: TodoConsts.TODO_REMOVED
 });
 
-export const fetchTodos = () => async (dispatch: Dispatch<TodosLoadAction>) => {
+export const fetchTodos = () => async (dispatch: Dispatch<TodoAction | MessageAction>) => {
   try {
-    // dispatch(showMessage('Loading todos'));
+    dispatch(showMessage('Loading todos'));
     const todos = await getTodos();
     dispatch(loadTodos(todos));
   } catch (error) {
@@ -57,10 +60,10 @@ export const fetchTodos = () => async (dispatch: Dispatch<TodosLoadAction>) => {
 };
 
 export const saveTodo = (name: string) => async (
-  dispatch: Dispatch<TodoAddedAction>
+  dispatch: Dispatch<TodoAction | MessageAction>
 ) => {
   try {
-    // dispatch(showMessage('saving todo'));
+    dispatch(showMessage('saving todo'));
     const todo: ITodoItem = await createTodo(name);
     dispatch(addTodo(todo));
   } catch (error) {
@@ -70,11 +73,11 @@ export const saveTodo = (name: string) => async (
 };
 
 export const toggleTodo = (id: number | string) => async (
-  dispatch: Dispatch<ReplaceTodoAction>,
+  dispatch: Dispatch<TodoAction | MessageAction>,
   getState: () => AppState
 ) => {
   try {
-    // dispatch(showMessage('Saving a todo'));
+    dispatch(showMessage('Saving a todo'));
     const { todos } = getState().todo;
     const todo = todos.find(t => t.id === id);
     if (!todo) {
@@ -89,8 +92,8 @@ export const toggleTodo = (id: number | string) => async (
   }
 };
 
-export const deleteTodo = (id: number | string) => async (dispatch: Dispatch<TodoRemovedAction>) => {
-  // dispatch(showMessage('Removing todo'));
+export const deleteTodo = (id: number | string) => async (dispatch: Dispatch<TodoAction | MessageAction>) => {
+  dispatch(showMessage('Removing todo'));
   try {
     await destroyTodo(id);
     dispatch(removeTodo(id))
