@@ -1,12 +1,14 @@
 import { connect } from 'react-redux';
-import TodoList from '../components/TodoList';
+import TodoList, { ITodoListPropsNative } from '../components/TodoList';
 import { AppState } from '../store';
-import { deleteTodo, fetchTodos, toggleTodo } from '../store/Todo/actions';
+import { deleteTodo, fetchTodos, getVisibleTodos, toggleTodo } from '../store/Todo/actions';
 // import { TodosLoadAction } from '../store/Todo/types';
 
-const mapStateToProps = (state: AppState) => ({
-    todos: state.todo.todos
-});
+const mapStateToProps = (state: AppState, ownProps: ITodoListPropsNative) => {
+    return {
+        todos: getVisibleTodos(state.todo.todos, ownProps.filter)
+    }
+};
 
 
 

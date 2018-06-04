@@ -29,7 +29,7 @@ class TodoForm extends React.Component<TodoFormProps, {}> {
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"
-            placeholder="todo description"
+            placeholder="Type a todo..."
             onChange={this.handleChange}
             value={currentTodo}
           />

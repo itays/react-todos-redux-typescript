@@ -1,16 +1,22 @@
 import * as React from 'react';
+// import { RouteProps } from 'react-router';
 import { ITodoItem } from '../store/Todo/types';
 import TodoItem from './TodoItem';
 
-interface ITodoListProps {
+
+export interface ITodoListProps { // actually passed from the connect
   todos: ITodoItem[];
   fetchTodos: () => () => Promise<void>;
   toggleTodo: (id: number | string) => () => Promise<void>;
   deleteTodo: (id: number | string) => () => Promise<void>;
 }
 
-class TodoList extends React.Component<ITodoListProps, {}> {
-  constructor(props: ITodoListProps) {
+export interface ITodoListPropsNative {
+  filter?: string;
+}
+export type TodoListProps = ITodoListProps & ITodoListPropsNative;
+class TodoList extends React.Component<TodoListProps, {}> {
+  constructor(props: TodoListProps) {
     super(props);
   }
   public componentDidMount() {

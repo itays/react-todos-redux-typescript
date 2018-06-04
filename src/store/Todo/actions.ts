@@ -102,4 +102,16 @@ export const deleteTodo = (id: number | string) => async (dispatch: Dispatch<Tod
     console.log(error);
   }
   
+};
+
+// Selector function
+export const getVisibleTodos = (todos: ITodoItem[], filter: string | undefined): ITodoItem[] => {
+  switch(filter) {
+    case 'active':
+      return todos.filter(t => !t.isComplete);
+    case 'completed':
+      return todos.filter(t => t.isComplete)
+    default:
+      return todos;
+  }
 }
